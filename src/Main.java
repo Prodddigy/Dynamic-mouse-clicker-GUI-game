@@ -12,14 +12,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-        SwingUtilities.invokeLater(() ->new Enemies());
-
+        SwingUtilities.invokeLater(() -> new MainMenu());
 
 
+        //SwingUtilities.invokeLater(() ->new Enemies());
 
 
 
+
+
+/*
         try {//Carpenter Brut.wav
             path = "Hydrogen by MOON.wav";
 
@@ -55,6 +57,8 @@ public class Main {
         }
 
 
-
+*/
     }
+
+
 }
