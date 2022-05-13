@@ -3,69 +3,102 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Enemies extends JFrame implements Runnable {
+public class Enemies extends JFrame  {
 
-    private int enemyHealth;
+//    private int enemyHealth;
     private JButton rooster;
 
 
     public Enemies()
     {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-
-        JButton rooster = new JButton("SHOOT HP-> "+10,new ImageIcon("rooster.gif"));
-        this.rooster = rooster;
-        rooster.addActionListener(new ActionListener() {
+        JPanel panel = new JPanel(null){
             @Override
-            public void actionPerformed(ActionEvent e) {
-
-                shakeButton();
-                enemyHealth++;
-
-                System.out.println("SHOT: "+enemyHealth+" times");
-
-                rooster.setText("SHOOT HP-> "+(10 - enemyHealth));
-                rooster.setBackground(Color.RED);
-
-                if( enemyHealth == 10)
-                {
-                    rooster.setEnabled(false);
-                    rooster.setText("DECEASED");
-                    rooster.setToolTipText("WELL DONE");
-                }
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(Toolkit.getDefaultToolkit().getImage("HotlineMiamiBack.gif"), 0,0,1200, 600, this);
             }
-        });
+        };
+
+        JFrame frame = new JFrame();
+
+//        JButton rooster = new JButton("SHOOT HP-> "+10,new ImageIcon("rooster.gif"));
+//        this.rooster = rooster;
+//        rooster.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                shakeButton();
+//                enemyHealth++;
+//
+//                System.out.println("SHOT: "+enemyHealth+" times");
+//
+//                rooster.setText("SHOOT HP-> "+(10 - enemyHealth));
+//                rooster.setBackground(Color.RED);
+//
+//                if( enemyHealth == 10)
+//                {
+//                    rooster.setEnabled(false);
+//                    rooster.setText("DECEASED");
+//                    rooster.setToolTipText("WELL DONE");
+//                }
+//            }
+//        });
+
+        ImageIcon chic =new ImageIcon("rooster.gif");
 
 
-        setLayout(new FlowLayout());
+        //Image back = chic.getImage("HotlineMiamiBack.gif");
+        //back = back.getScaledInstance(700,400,Image.SCALE_DEFAULT);
+       // setLayout(new FlowLayout());
 
-        rooster.setToolTipText("PULL THE TRIGGER");
+        //setToolTipText("PULL THE TRIGGER");
 
 
-        add(rooster);
+        frame.setSize(1200,600);
+        for (int i = 0; i < 1; i++) {
 
-        setSize(700,400);
+            int x =0;
+            int y= 0;
 
-        setLocationRelativeTo(null);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                 x = 350;
+                 y = 200;
 
-        setVisible(true);
+            System.out.println(x +"y =  " + y);
+
+            Multiple enem =new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel,frame);
+            enem.setBounds(frame.getWidth()/2 -150,frame.getHeight()/2 -150,300,300);
+            panel.add(enem);
+
+
+        }
+
+      //  panel.add(new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel).setBounds(175,100,100,100););
+       // panel.add(new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel).setBounds(525,300,100,100););
+
+        //this.danceBaby();
+        frame.add(panel);
+
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        frame.setVisible(true);
 
 
     }
 
-
+/*
     public void danceBaby() {
 
-        final Point point = rooster.getLocation();
+        final Point point = getLocation();
         final int delay = 1000;
 
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 10; i++) {
+                while(true){
                     try {
 
                         moveButton(new Point(point.x + 10, point.y));
@@ -139,8 +172,8 @@ public class Enemies extends JFrame implements Runnable {
             }
         };
 
-        Thread t = new Thread(r);
-        t.start();
+       // Thread t = new Thread(r);
+//        t.start();
     }
 
     private void moveButton(final Point p) {
@@ -151,5 +184,9 @@ public class Enemies extends JFrame implements Runnable {
                 rooster.setLocation(p);
             }
         });
+
+ */
     }
-}
+
+
+

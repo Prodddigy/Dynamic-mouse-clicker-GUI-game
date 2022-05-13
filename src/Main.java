@@ -15,13 +15,13 @@ public class Main {
         SwingUtilities.invokeLater(() -> new MainMenu());
 
 
-        //SwingUtilities.invokeLater(() ->new Enemies());
+//        SwingUtilities.invokeLater(() ->new Enemies());
 
 
 
 
 
-/*
+
         try {//Carpenter Brut.wav
             path = "Hydrogen by MOON.wav";
 
@@ -57,7 +57,7 @@ public class Main {
         }
 
 
-*/
+
     }
 
 
