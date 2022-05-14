@@ -6,8 +6,9 @@ import java.util.Scanner;
 public class Main {
 
 
-    static String path;
-    static Clip clip;
+   static  String path;
+     static Clip clip;
+
 
 
     public static void main(String[] args) {
@@ -17,11 +18,10 @@ public class Main {
 
 //        SwingUtilities.invokeLater(() ->new Enemies());
 
+    }
 
-
-
-
-
+    public static void music()
+    {
         try {//Carpenter Brut.wav
             path = "Hydrogen by MOON.wav";
 
@@ -45,7 +45,7 @@ public class Main {
                 if(q == "q")
                     clip.stop();
 
-                    break;
+                break;
 
 
             }
@@ -55,9 +55,6 @@ public class Main {
         {
             System.out.println("oops error");
         }
-
-
-
     }
 
 

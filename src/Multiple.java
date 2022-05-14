@@ -8,15 +8,22 @@ public class Multiple extends JButton {
 
     private boolean dance =true;
 
-    Multiple(String text, ImageIcon icon,JPanel panel, JFrame frame)
+    private Point point;
+
+
+    Multiple(String text, ImageIcon icon,JPanel panel, JFrame frame, Point point, int position)
     {
+
         super(text,icon);
 
+
+
+        this.point = point;
         Multiple tmp = this;
-this.setBounds(frame.getWidth()/2 -150,frame.getHeight()/2 -150,300,300);
-        System.out.println(getLocation()+ " location now");
-        this.danceBaby();
-        System.out.println(getLocation() + "location after");
+//this.setBounds(frame.getWidth()/2 -150,frame.getHeight()/2 -150,300,300);
+        System.out.println(point+ " location now");
+        danceBaby(point,position);
+        System.out.println(point + "location after");
 
 
         addActionListener(new ActionListener() {
@@ -56,43 +63,67 @@ this.setBounds(frame.getWidth()/2 -150,frame.getHeight()/2 -150,300,300);
 
 
 
+
     }
 
-    public void danceBaby() {
+    public void danceBaby(Point point, int position) {
 
-        final Point point = getLocation();
+      //  final Point point = getLocation();
         final int delay = 1000;
         System.out.println("danceBaby loc"+ getLocation());
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    try {
+if( position ==2) {
+    Runnable r = new Runnable() {
+        @Override
+        public void run() {
+            while (true) {
 
-                        moveButton(new Point(point.x + 100, point.y));
-                        Thread.sleep(delay);
-                        moveButton(point);
-                        Thread.sleep(delay);
-                        moveButton(new Point(point.x, point.y - 100));
-                        Thread.sleep(delay);
-                        moveButton(point);
-                        Thread.sleep(delay);
-                        moveButton(new Point(point.x - 100, point.y));
-                        Thread.sleep(delay);
-                        moveButton(point);
-                        Thread.sleep(delay);
-                        moveButton(new Point(point.x , point.y + 100));
-                        Thread.sleep(delay);
-                        moveButton(point);
-                        Thread.sleep(delay);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
+                try {
+
+
+                    moveButton(new Point(point.x, point.y - 100));
+                    Thread.sleep(delay);
+                    moveButton(point);
+                    Thread.sleep(delay);
+                    moveButton(new Point(point.x, point.y + 100));
+                    Thread.sleep(delay);
+                    moveButton(point);
+                    Thread.sleep(delay);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
             }
-        };
-        Thread dd = new Thread(r);
-        dd.start();
+        }
+    };
+    Thread dd = new Thread(r);
+    dd.start();
+}
+else {
+    Runnable r = new Runnable() {
+        @Override
+        public void run() {
+            while (true) {
+
+                try {
+
+
+                    moveButton(new Point(point.x, point.y + 100));
+                    Thread.sleep(delay);
+                    moveButton(point);
+                    Thread.sleep(delay);
+                    moveButton(new Point(point.x, point.y - 100));
+                    Thread.sleep(delay);
+                    moveButton(point);
+                    Thread.sleep(delay);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+    };
+    Thread dd = new Thread(r);
+    dd.start();
+}
+
 
     }
 

@@ -1,16 +1,28 @@
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.util.Scanner;
 
 public class Enemies extends JFrame  {
 
+
+
 //    private int enemyHealth;
     private JButton rooster;
+    private Thread song = new Thread(() -> {
+while(!Thread.interrupted()) {
 
+    Main.music();
+
+}
+
+    });
 
     public Enemies()
     {
+        song.start();
+
         JPanel panel = new JPanel(null){
             @Override
             protected void paintComponent(Graphics g) {
@@ -55,24 +67,45 @@ public class Enemies extends JFrame  {
 
 
         frame.setSize(1200,600);
-        for (int i = 0; i < 1; i++) {
-
-            int x =0;
-            int y= 0;
+        for (int j = 1; j < 3; j++) {
 
 
-                 x = 350;
-                 y = 200;
-
-            System.out.println(x +"y =  " + y);
-
-            Multiple enem =new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel,frame);
-            enem.setBounds(frame.getWidth()/2 -150,frame.getHeight()/2 -150,300,300);
-            panel.add(enem);
+            for (int i = 1; i < 6; i++) {
 
 
+
+             //   System.out.println(x + "y =  " + y);
+            Point point = new Point (frame.getWidth() - (200 * i) - 75, frame.getHeight() - (400 / j) - 75);
+            if(i%2 ==0) {
+
+                Multiple enem = new Multiple("SHOOT HP-> " + 10, new ImageIcon("rooster.gif"), panel, frame, point, 2);
+
+                enem.setBounds(frame.getWidth() - (200 * i) - 75, frame.getHeight() - (400 / j) - 75, 150, 150);
+                System.out.println(enem.getLocation()+" enemies location hello" +
+                        "");
+                panel.add(enem);
+            }
+            else {
+                Multiple enem = new Multiple("SHOOT HP-> " + 10, new ImageIcon("rooster.gif"), panel, frame, point, 1);
+
+                enem.setBounds(frame.getWidth() - (200 * i) - 75, frame.getHeight() - (400 / j) - 75, 150, 150);
+                System.out.println(enem.getLocation()+" enemies location hello" +
+                        "");
+                panel.add(enem);
+
+            }
+
+
+            }
         }
 
+        WindowListener listener = new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                Frame frame = (Frame) evt.getSource();
+                song.interrupt();
+                System.out.println("hello there");
+            }
+        };
       //  panel.add(new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel).setBounds(175,100,100,100););
        // panel.add(new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel).setBounds(525,300,100,100););
 
@@ -87,7 +120,11 @@ public class Enemies extends JFrame  {
         frame.setVisible(true);
 
 
+
+        frame.addWindowListener(listener);
+
     }
+
 
 /*
     public void danceBaby() {
