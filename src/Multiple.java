@@ -20,9 +20,9 @@ public class Multiple extends JButton {
 
         this.point = point;
         Multiple tmp = this;
-//this.setBounds(frame.getWidth()/2 -150,frame.getHeight()/2 -150,300,300);
+    //this.setBounds(frame.getWidth()/2 -150,frame.getHeight()/2 -150,300,300);
         System.out.println(point+ " location now");
-        danceBaby(point,position);
+        danceBaby(point,position,panel, tmp);
         System.out.println(point + "location after");
 
 
@@ -39,18 +39,13 @@ public class Multiple extends JButton {
                 setText("SHOOT HP-> "+(10 - enemyHealth));
                 setBackground(Color.RED);
 
-
-
                 if( enemyHealth == 10)
                 {
-                    //dance = false;
-
                     panel.remove(tmp);
 
                     panel.revalidate();
 
                     panel.repaint();
-
 
                     setEnabled(false);
                     setText("DECEASED");
@@ -64,11 +59,13 @@ public class Multiple extends JButton {
 
 
 
+
+
     }
 
-    public void danceBaby(Point point, int position) {
+    public void danceBaby(Point point, int position, JPanel panel, Multiple tmp) {
 
-      //  final Point point = getLocation();
+
         final int delay = 1000;
         System.out.println("danceBaby loc"+ getLocation());
 if( position ==2) {
@@ -79,7 +76,6 @@ if( position ==2) {
 
                 try {
 
-
                     moveButton(new Point(point.x, point.y - 100));
                     Thread.sleep(delay);
                     moveButton(point);
@@ -88,6 +84,18 @@ if( position ==2) {
                     Thread.sleep(delay);
                     moveButton(point);
                     Thread.sleep(delay);
+                    moveButton(new Point(point.x - 50, point.y ));
+                    Thread.sleep(delay);
+                    moveButton(point);
+                    Thread.sleep(delay);
+                    point.x = point.x -50;
+
+                    if(point.x <0)
+                    {
+                        panel.remove(tmp);
+
+                        //subtract points from player
+                    }
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
@@ -114,6 +122,19 @@ else {
                     Thread.sleep(delay);
                     moveButton(point);
                     Thread.sleep(delay);
+                    moveButton(new Point(point.x - 50, point.y ));
+                    Thread.sleep(delay);
+                    moveButton(point);
+                    Thread.sleep(delay);
+
+                    point.x = point.x -50;
+
+                    if(point.x <0)
+                    {
+                        panel.remove(tmp);
+
+                        //subtract points from player
+                    }
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
