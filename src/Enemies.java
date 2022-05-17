@@ -10,18 +10,26 @@ public class Enemies extends JFrame  {
 
 //    private int enemyHealth;
     private JButton rooster;
-    private Thread song = new Thread(() -> {
-while(!Thread.interrupted()) {
 
-    Main.music();
 
-}
 
-    });
 
-    public Enemies()
+    public Enemies(Player newPlayer)
     {
-        song.start();
+
+            
+
+
+        Main.music();
+
+//        WindowListener listener = new WindowAdapter() {
+//            public void windowClosing(WindowEvent evt) {
+//                Main.stopMusic =false;
+//                System.out.println("hello there");
+//            }
+//        };
+
+
 
         JPanel panel = new JPanel(null){
             @Override
@@ -99,19 +107,13 @@ while(!Thread.interrupted()) {
             }
         }
 
-        WindowListener listener = new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                Frame frame = (Frame) evt.getSource();
-                song.interrupt();
-                System.out.println("hello there");
-            }
-        };
+
       //  panel.add(new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel).setBounds(175,100,100,100););
        // panel.add(new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel).setBounds(525,300,100,100););
 
         //this.danceBaby();
         frame.add(panel);
-
+//        frame.addWindowListener(listener);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
@@ -121,7 +123,7 @@ while(!Thread.interrupted()) {
 
 
 
-        frame.addWindowListener(listener);
+
 
     }
 

@@ -1,13 +1,14 @@
 import javax.swing.*;
 import javax.tools.Tool;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
 
 public class MainMenu extends JFrame {
+
+
+Player newPlayer ;
 
 
     MainMenu()
@@ -41,8 +42,9 @@ public class MainMenu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+            newPlayer = new Player();
 
-                SwingUtilities.invokeLater(() ->new Enemies());
+                SwingUtilities.invokeLater(() ->new Enemies(newPlayer));
             }
         });
 

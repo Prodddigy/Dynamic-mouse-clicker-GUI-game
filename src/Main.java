@@ -1,13 +1,16 @@
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
 
+    static boolean stopMusic =true;
 
-   static  String path;
-     static Clip clip;
+    static  String path;
+
+    static Clip clip;
 
 
 
@@ -29,27 +32,19 @@ public class Main {
 
             song.clip.start();
 
-            Scanner scan = new Scanner(System.in);
-
-            while(true)
+            while(stopMusic)
             {
                 String sing = path;
 
                 System.out.println("Now playing...");
 
-                System.out.println("-_-_-_-_ "+ sing+ " -_-_-_-_");
-                System.out.println("press q to quit music");
+                System.out.println("-_-_-_-_ "+sing+ " -_-_-_-_");
 
-                String q = scan.next();
 
-                if(q == "q")
-                    clip.stop();
 
                 break;
-
-
             }
-            scan.close();
+
         }
         catch (Exception ex)
         {
