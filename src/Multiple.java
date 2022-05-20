@@ -3,28 +3,37 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Multiple extends JButton {
+public class Multiple extends JButton{
     private int enemyHealth;
+
+    private int playerHp =20;
 
     private boolean dance =true;
 
     private Point point;
 
+    private JPanel panel;
 
-    Multiple(String text, ImageIcon icon,JPanel panel, JFrame frame, Point point, int position)
+
+
+
+
+    Multiple(String text, ImageIcon icon,JPanel panel, JFrame frame, Point point, int position, boolean killed)
     {
+
 
         super(text,icon);
 
 
 
+this.panel = panel;
+
         this.point = point;
         Multiple tmp = this;
     //this.setBounds(frame.getWidth()/2 -150,frame.getHeight()/2 -150,300,300);
         System.out.println(point+ " location now");
-        danceBaby(point,position,panel, tmp);
+        danceBaby(point,position,panel, tmp,frame);
         System.out.println(point + "location after");
-
 
         addActionListener(new ActionListener() {
             @Override
@@ -41,6 +50,7 @@ public class Multiple extends JButton {
 
                 if( enemyHealth == 10)
                 {
+                     //killed =false;
                     panel.remove(tmp);
 
                     panel.revalidate();
@@ -50,25 +60,17 @@ public class Multiple extends JButton {
                     setEnabled(false);
                     setText("DECEASED");
                     setToolTipText("WELL DONE");
-
-
                 }
             }
         });
-
-
-
-
-
-
     }
 
-    public void danceBaby(Point point, int position, JPanel panel, Multiple tmp) {
+    public void danceBaby(Point point, int position, JPanel panel, Multiple tmp, JFrame frame) {
 
 
         final int delay = 1000;
         System.out.println("danceBaby loc"+ getLocation());
-if( position ==2) {
+    if( position ==2) {
     Runnable r = new Runnable() {
         @Override
         public void run() {
@@ -94,6 +96,14 @@ if( position ==2) {
                     {
                         panel.remove(tmp);
 
+                        playerHp--;
+                        if(playerHp<=0)
+                        {
+                            gameOver(panel);
+
+                            panel.add(new JLabel("Game over")).setBounds(600-200, 300-50,200,50);
+
+                        }
                         //subtract points from player
                     }
                 } catch (InterruptedException ex) {
@@ -105,7 +115,8 @@ if( position ==2) {
     Thread dd = new Thread(r);
     dd.start();
 }
-else {
+else
+{
     Runnable r = new Runnable() {
         @Override
         public void run() {
@@ -132,7 +143,13 @@ else {
                     if(point.x <0)
                     {
                         panel.remove(tmp);
+                        playerHp-=20;
+                        if(playerHp<=0)
+                        {
+                            gameOver(panel);
 
+                            panel.add(new JLabel("Game over")).setBounds(600-200, 300-50,200,50);
+                        }
                         //subtract points from player
                     }
                 } catch (InterruptedException ex) {
@@ -198,4 +215,11 @@ else {
             }
         });
     }
+
+    public static void gameOver(JPanel panel)
+    {
+        panel.removeAll();
+    }
+
+
 }

@@ -20,7 +20,6 @@ public class Main {
 
 
 //        SwingUtilities.invokeLater(() ->new Enemies());
-
     }
 
     public static void music()
@@ -39,8 +38,6 @@ public class Main {
                 System.out.println("Now playing...");
 
                 System.out.println("-_-_-_-_ "+sing+ " -_-_-_-_");
-
-
 
                 break;
             }
