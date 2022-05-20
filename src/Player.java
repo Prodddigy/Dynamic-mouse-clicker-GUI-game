@@ -24,4 +24,8 @@ public class Player {
     {
        this.score +=1000;
     }
+
+    public void setScore(int score) {
+        this.score += score;
+    }
 }

@@ -1,29 +1,43 @@
 import javax.sound.sampled.Clip;
 import javax.swing.*;
+import javax.swing.plaf.multi.MultiInternalFrameUI;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Scanner;
 
 public class Enemies extends JFrame implements WindowListener {
 
-    private
-    boolean killed = true;
+  //  private
+   // boolean killed = true;
+
+    private static int playerHp =20;
+
+    JPanel panel;
+
+    private Player player;
 
 //    private int enemyHealth;
     private JButton rooster;
+
+    private static JLabel health;
 
     Thread music = new Thread(() -> {
         Main.music();
 
     });
 
+    ArrayList<Multiple>enemies = new ArrayList<>();
+
     public Enemies(Player newPlayer)
     {
 
+        this.player = newPlayer;
+
         music.start();
 
-        JPanel panel = new JPanel(null){
+         panel = new JPanel(null){
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -36,11 +50,44 @@ public class Enemies extends JFrame implements WindowListener {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
+
+                panel.removeAll();
+
+                for(Multiple tmp : enemies)
+                {
+                    tmp.setKilled(false);
+
+
+                }
+
                 System.out.println("works ?");
                 Rythm.clip.stop();
             }
         });
 
+        ImageIcon hp =new ImageIcon("hp.png");
+
+        Image life = hp.getImage();
+        life = life.getScaledInstance(75,75,Image.SCALE_DEFAULT);
+        //setLayout(new FlowLayout());
+
+        //setToolTipText("PULL THE TRIGGER");
+
+         hp = new ImageIcon(life);
+
+
+        JLabel healthPic = new JLabel(hp);
+
+
+
+
+        health = new JLabel("HP" + playerHp+"/20");
+
+
+
+        health.setFont(new Font(Font.DIALOG, Font.ITALIC,30));
+
+        health.setForeground(Color.MAGENTA);
 
 
         ImageIcon chic =new ImageIcon("rooster.gif");
@@ -55,6 +102,7 @@ public class Enemies extends JFrame implements WindowListener {
         ImageIcon roo = new ImageIcon(back);
 
         frame.setSize(1200,600);
+
         for (int j = 1; j < 3; j++) {
 
             for (int i = 1; i < 6; i++) {
@@ -63,15 +111,16 @@ public class Enemies extends JFrame implements WindowListener {
             Point point = new Point (frame.getWidth() - (200 * i) - 75, frame.getHeight() - (400 / j) - 75);
             if(i%2 ==0) {
 
-                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 2,killed);
-
+                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 2, player);
+                enemies.add(enem);
                 enem.setBounds(frame.getWidth() - (200 * i) - 35, frame.getHeight() - (400 / j) - 35, 70, 70);
                 System.out.println(enem.getLocation()+" enemies location hello");
                 panel.add(enem);
             }
-            else {
-                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 1,killed);
-
+            else
+            {
+                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 1,player);
+                enemies.add(enem);
                 enem.setBounds(frame.getWidth() - (200 * i) - 35, frame.getHeight() - (400 / j) - 35, 70, 70);
                 System.out.println(enem.getLocation()+" enemies location hello");
                 panel.add(enem);
@@ -93,8 +142,8 @@ public class Enemies extends JFrame implements WindowListener {
 
 
         Image axeIm = axeImIc.getImage();
-      final Image  axeImage = axeIm.getScaledInstance(200,200,Image.SCALE_DEFAULT);
-axeIm = axeImage.getScaledInstance(50,50, Image.SCALE_DEFAULT);
+        final Image  axeImage = axeIm.getScaledInstance(200,200,Image.SCALE_DEFAULT);
+        axeIm = axeImage.getScaledInstance(50,50, Image.SCALE_DEFAULT);
         axeImIc =new ImageIcon(axeIm);
         JButton axe = new JButton(axeImIc);
 
@@ -120,15 +169,37 @@ axeIm = axeImage.getScaledInstance(50,50, Image.SCALE_DEFAULT);
         swordImIc =new ImageIcon(swordIm);
         JButton sword = new JButton(swordImIc);
 
+        panel.add(health);
+        panel.add(healthPic);
+
+
         panel.add(bat);
         panel.add(axe);
         panel.add(sword);
         panel.revalidate();
         panel.repaint();
+        healthPic.setBounds(1150-100,70,200,70);
+        health.setBounds(1150-100,70,200,70);
+
+
+
+
+        //health.setOpaque(true);
 
         bat.setBounds(1150-50,150,50,50);
         axe.setBounds(1150-50,200, 50,50);
         sword.setBounds(1150-50,250, 50,50);
+
+
+        bat.setOpaque(true);
+
+        axe.setOpaque(true);
+        sword.setOpaque(true);
+
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+        Cursor a = toolkit.createCustomCursor(batImage, new Point(0,0),"bat");
+        frame.setCursor(a);
 
         bat.addActionListener(new ActionListener() {
             @Override
@@ -168,6 +239,7 @@ axeIm = axeImage.getScaledInstance(50,50, Image.SCALE_DEFAULT);
             }
         });
 
+
         //this.danceBaby();
         frame.add(panel);
 //        frame.addWindowListener(listener);
@@ -183,11 +255,26 @@ axeIm = axeImage.getScaledInstance(50,50, Image.SCALE_DEFAULT);
     @Override
     public void windowOpened(WindowEvent e) {
 
+
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        System.out.println("works ?");
+
+
+        panel.removeAll();
+
+
+        for(Multiple tmp : enemies)
+        {
+            tmp.setKilled(false);
+
+            tmp.dd.interrupt();
+        }
+
+
+
+      //  System.out.println("works ?");
         Main.clip.stop();
 
     }
@@ -215,6 +302,21 @@ axeIm = axeImage.getScaledInstance(50,50, Image.SCALE_DEFAULT);
     @Override
     public void windowDeactivated(WindowEvent e) {
 
+    }
+
+    public static void setPlayerHp(int playerHp) {
+        Enemies.playerHp = playerHp;
+    }
+
+    public static int getPlayerHp(int dmg) {
+       playerHp = playerHp-dmg;
+        return playerHp;
+    }
+
+    public static void updateHp()
+    {
+        System.out.println("Update hp"+ playerHp);
+        health.setText("HP" + playerHp+"/20");
     }
 }
 

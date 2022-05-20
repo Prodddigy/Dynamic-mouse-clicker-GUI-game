@@ -45,6 +45,8 @@ Player newPlayer ;
             newPlayer = new Player();
 
                 SwingUtilities.invokeLater(() ->new Enemies(newPlayer));
+
+                Enemies.setPlayerHp(20);
             }
         });
 
