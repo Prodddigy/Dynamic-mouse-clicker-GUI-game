@@ -51,6 +51,7 @@ public class Multiple extends JButton{
                 {
                     newplayer.setScore(1000);
 
+                    Enemies.updatePts();
                      //killed =false;
                     panel.remove(tmp);
 
@@ -70,7 +71,7 @@ public class Multiple extends JButton{
     }
 
     public void danceBaby(Point point, int position, JPanel panel, Multiple tmp, JFrame frame) {
-        final int delay = 1000;
+        final int delay = 997;
        // System.out.println("danceBaby loc"+ getLocation());
     if( position ==2) {
     Runnable r = new Runnable() {

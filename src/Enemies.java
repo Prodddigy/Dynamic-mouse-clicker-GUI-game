@@ -14,12 +14,16 @@ public class Enemies extends JFrame implements WindowListener {
 
     private static int playerHp =20;
 
+    private static int playerPts = 0;
+
     JPanel panel;
 
-    private Player player;
+    private static Player player;
 
 //    private int enemyHealth;
     private JButton rooster;
+
+    private static JLabel scoreLabel;
 
     private static JLabel health;
 
@@ -65,25 +69,35 @@ public class Enemies extends JFrame implements WindowListener {
             }
         });
 
+        ImageIcon score =new ImageIcon("score.png");
+
+        Image points = score.getImage();
+        points = points.getScaledInstance(200,100,Image.SCALE_DEFAULT);
+
+        score = new ImageIcon(points);
+
+        JLabel scoreboard = new JLabel(score);
+
+        scoreLabel = new JLabel( playerPts +"pts");
+
+        scoreLabel.setFont(new Font(Font.DIALOG, Font.ITALIC,30));
+
+        scoreLabel.setForeground(Color.MAGENTA);
+
+
+
+
+
         ImageIcon hp =new ImageIcon("hp.png");
 
         Image life = hp.getImage();
         life = life.getScaledInstance(75,75,Image.SCALE_DEFAULT);
-        //setLayout(new FlowLayout());
-
-        //setToolTipText("PULL THE TRIGGER");
 
          hp = new ImageIcon(life);
 
-
         JLabel healthPic = new JLabel(hp);
 
-
-
-
         health = new JLabel("HP" + playerHp+"/20");
-
-
 
         health.setFont(new Font(Font.DIALOG, Font.ITALIC,30));
 
@@ -95,9 +109,6 @@ public class Enemies extends JFrame implements WindowListener {
 
         Image back = chic.getImage();
         back = back.getScaledInstance(75,75,Image.SCALE_DEFAULT);
-        //setLayout(new FlowLayout());
-
-        //setToolTipText("PULL THE TRIGGER");
 
         ImageIcon roo = new ImageIcon(back);
 
@@ -162,7 +173,7 @@ public class Enemies extends JFrame implements WindowListener {
 
 
         Image swordIm = swordImIc.getImage();
-       final Image swordImage = swordIm.getScaledInstance(70,70,Image.SCALE_DEFAULT);
+       final Image swordImage = swordIm.getScaledInstance(500,500,Image.SCALE_DEFAULT);
         swordIm = swordImage.getScaledInstance(50,50, Image.SCALE_DEFAULT);
 
 
@@ -172,16 +183,21 @@ public class Enemies extends JFrame implements WindowListener {
         panel.add(health);
         panel.add(healthPic);
 
+        panel.add(scoreLabel);
+        panel.add(scoreboard);
+
 
         panel.add(bat);
         panel.add(axe);
         panel.add(sword);
         panel.revalidate();
         panel.repaint();
+
         healthPic.setBounds(1150-100,70,200,70);
         health.setBounds(1150-100,70,200,70);
 
-
+        scoreboard.setBounds(600-200,550-100,200,100);
+        scoreLabel.setBounds(650-200,570-100,200,100);
 
 
         //health.setOpaque(true);
@@ -262,21 +278,6 @@ public class Enemies extends JFrame implements WindowListener {
     public void windowClosing(WindowEvent e) {
 
 
-        panel.removeAll();
-
-
-        for(Multiple tmp : enemies)
-        {
-            tmp.setKilled(false);
-
-            tmp.dd.interrupt();
-        }
-
-
-
-      //  System.out.println("works ?");
-        Main.clip.stop();
-
     }
 
     @Override
@@ -318,6 +319,13 @@ public class Enemies extends JFrame implements WindowListener {
         System.out.println("Update hp"+ playerHp);
         health.setText("HP" + playerHp+"/20");
     }
+
+    public static void updatePts()
+    {
+        System.out.println("Update score"+ player.getScore());
+        scoreLabel.setText( player.getScore()+"pts");
+    }
+
 }
 
 

@@ -42,7 +42,14 @@ Player newPlayer ;
             @Override
             public void actionPerformed(ActionEvent e) {
 
-            newPlayer = new Player();
+
+
+            newPlayer = new Player("Tim");
+
+            for( Player tmp : Player.TopPlayers)
+            {
+                System.out.println(tmp);
+            }
 
                 SwingUtilities.invokeLater(() ->new Enemies(newPlayer));
 
@@ -51,24 +58,13 @@ Player newPlayer ;
         });
 
         frame.setSize(1200, 600);
-       //panel.setLayout(new FlowLayout());
+
        start.setBounds(frame.getWidth()/2-100,frame.getHeight()/2-20, 200,40);
 
-
-
-      //  Toolkit kit = Toolkit.getDefaultToolkit();
-
-        //Image back = kit.getImage("HotlineMiamiBack.gif");
-      //  back = back.getScaledInstance(700,400,Image.SCALE_DEFAULT);
-        //frame.add(new JLabel(new ImageIcon(back)));
-
-     //  start.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //panel.add(start);
         panel.add(start);
 
-        //panel.add(new JLabel(new ImageIcon(back)));
         frame.add(panel);
-       // panel.setOpaque(true);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setVisible(true);
