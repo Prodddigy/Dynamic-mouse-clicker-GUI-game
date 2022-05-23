@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 public class Enemies extends JFrame implements WindowListener {
 
   //  private
@@ -16,7 +18,11 @@ public class Enemies extends JFrame implements WindowListener {
 
     private static int playerPts = 0;
 
+    private Thread waitForEnemy;
+
     JPanel panel;
+
+    private boolean metal =false;
 
     private static Player player;
 
@@ -27,6 +33,10 @@ public class Enemies extends JFrame implements WindowListener {
 
     private static JLabel health;
 
+
+
+
+
     Thread music = new Thread(() -> {
         Main.music();
 
@@ -34,8 +44,9 @@ public class Enemies extends JFrame implements WindowListener {
 
     ArrayList<Multiple>enemies = new ArrayList<>();
 
-    public Enemies(Player newPlayer)
-    {
+    ArrayList<MultipleSaws>enemiesSaw = new ArrayList<>();
+
+    public Enemies(Player newPlayer) throws InterruptedException {
 
         this.player = newPlayer;
 
@@ -142,6 +153,16 @@ public class Enemies extends JFrame implements WindowListener {
             }
         }
 
+        ImageIcon sawImgIc =new ImageIcon("sawblade.png");
+
+
+        Image sawImg = sawImgIc.getImage();
+        sawImg = sawImg.getScaledInstance(40,40,Image.SCALE_DEFAULT);
+
+        sawImgIc = new ImageIcon(sawImg);
+
+       // JButton saw = new JButton(sawImgIc);
+
 
       //  panel.add(new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel).setBounds(175,100,100,100););
        // panel.add(new Multiple("SHOOT HP-> "+10,new ImageIcon("rooster.gif"),panel).setBounds(525,300,100,100););
@@ -220,7 +241,7 @@ public class Enemies extends JFrame implements WindowListener {
         bat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                metal = false;
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
 
                 Cursor a = toolkit.createCustomCursor(batImage, new Point(0,0),"bat");
@@ -231,7 +252,7 @@ public class Enemies extends JFrame implements WindowListener {
         axe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                metal = false;
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
 
                 Cursor a = toolkit.createCustomCursor(axeImage, new Point(0,0),"bat");
@@ -242,7 +263,7 @@ public class Enemies extends JFrame implements WindowListener {
         sword.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                metal = true;
                 Toolkit toolkit = Toolkit.getDefaultToolkit();
 
 
@@ -255,6 +276,81 @@ public class Enemies extends JFrame implements WindowListener {
             }
         });
 
+/*
+for (int j = 1; j < 3; j++) {
+
+            for (int i = 1; i < 6; i++) {
+
+             //   System.out.println(x + "y =  " + y);
+            Point point = new Point (frame.getWidth() - (200 * i) - 75, frame.getHeight() - (400 / j) - 75);
+            if(i%2 ==0) {
+
+                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 2, player);
+                enemies.add(enem);
+                enem.setBounds(frame.getWidth() - (200 * i) - 35, frame.getHeight() - (400 / j) - 35, 70, 70);
+                System.out.println(enem.getLocation()+" enemies location hello");
+                panel.add(enem);
+            }
+            else
+            {
+                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 1,player);
+                enemies.add(enem);
+                enem.setBounds(frame.getWidth() - (200 * i) - 35, frame.getHeight() - (400 / j) - 35, 70, 70);
+                System.out.println(enem.getLocation()+" enemies location hello");
+                panel.add(enem);
+
+            }
+
+
+            }
+        }
+ */
+
+        ImageIcon finalSawImgIc = sawImgIc;
+        waitForEnemy = new Thread(() -> {
+            try {//45997
+                Thread.sleep(1000);
+                for (int i = 1; i <=6 ; i++) {
+
+
+
+                    if(i%2==0)
+                    {
+                        Point point = new Point (1200-20, 0);
+                        int position =1;
+                        MultipleSaws enemSaw = new MultipleSaws(finalSawImgIc,panel,frame,point,position,player);
+                        enemiesSaw.add(enemSaw);
+                        enemSaw.setBounds(0-20,1200-20,40,40);
+                        panel.add(enemSaw);
+                        //saw.setLocation(0, 1200);
+                        System.out.println("created");
+
+                    }
+
+                    if(i%2!=0)
+                    {
+                        Point point = new Point (1180, 580);
+                        int position =2;
+                        MultipleSaws enemSaw = new MultipleSaws(finalSawImgIc,panel,frame,point,position,player);
+                        enemiesSaw.add(enemSaw);
+                        enemSaw.setBounds(600-20,1200-20,40,40);
+                        panel.add(enemSaw);
+                        //saw.setLocation(0, 1200);
+                        System.out.println("created");
+
+                    }
+
+                        sleep(500);
+                }
+
+
+                System.out.println("next enemy pls");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        });
+        waitForEnemy.start();
 
         //this.danceBaby();
         frame.add(panel);
@@ -265,7 +361,16 @@ public class Enemies extends JFrame implements WindowListener {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         frame.setVisible(true);
+
+//next enemy
+
+
+
+
+
+
     }
+
 
 
     @Override

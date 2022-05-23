@@ -51,7 +51,13 @@ Player newPlayer ;
                 System.out.println(tmp);
             }
 
-                SwingUtilities.invokeLater(() ->new Enemies(newPlayer));
+                SwingUtilities.invokeLater(() -> {
+                    try {
+                        new Enemies(newPlayer);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                });
 
                 Enemies.setPlayerHp(20);
             }
