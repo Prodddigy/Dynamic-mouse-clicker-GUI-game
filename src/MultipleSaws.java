@@ -1,28 +1,52 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MultipleSaws extends JButton {
 
 
-private int enemyHealth;
+    private int enemyHealth;
 
-private boolean metal;
+    private boolean metal;
 
 
-
-    private boolean killed =true;
+    private boolean killed =false;
     private int hp;
 
     Thread dd;
 
 
 
-MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int position, Player player )
+MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int position, Player newplayer )
 {
     super(icon);
     MultipleSaws tmp = this;
 
     danceBaby_but_diagonally(position,point,panel,tmp,frame);
+
+    addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+        if(Enemies.isMetal()) {
+
+
+            newplayer.setScore(10000);
+
+            Enemies.updatePts();
+            //killed =false;
+            panel.remove(tmp);
+
+            panel.revalidate();
+
+            panel.repaint();
+
+            tmp.killed = true;
+            setEnabled(false);
+        }
+        }
+    });
 
 }
 
@@ -39,14 +63,14 @@ MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int positio
                         //Point tmp1 = null;
                        // Point tmp2= null;
                         try {
-                            for (int i = 1; i <= 580; i++) {
+                            for (int i = 1; i <= 680; i++) {
 
                                setLocation(point.x-i,point.y-i);
                                 Thread.sleep(delay);
                                // tmp1.x = point.x ;
                                 // tmp2.y = point.y ;
 
-                                if (killed == false) {
+                                if (killed) {
                                     break;
                                 }
 
@@ -56,22 +80,14 @@ MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int positio
                                     System.out.println("last point" +point);
                             }
 
-                            //System.out.println("point value"+ point);
-                          //  tmp.moveButton(new Point(600, 0));
-
-                           // setLocation(580,0);
                             for (int i = 1; i <= 580; i++) {
 
 
 
                                 moveButton(new Point((point.x-680) - i, (point.y-580) + i));
                                 Thread.sleep(delay);
-                                // point.x = point.x -i;
-                                //  point.y = point.y -i;
-                              //  System.out.println("point value"+ point);
 
-
-                                if (killed == false) {
+                                if (killed) {
                                     break;
                                 }
 
@@ -108,51 +124,56 @@ MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int positio
             Runnable r = new Runnable() {
                 @Override
                 public void run() {
-                    while (killed) {
-                       /* try {
-                            moveButton(new Point(point.x, point.y + 100));
-                            Thread.sleep(delay);
-                            moveButton(point);
-                            Thread.sleep(delay);
-                            moveButton(new Point(point.x, point.y - 100));
-                            Thread.sleep(delay);
-                            moveButton(point);
-                            Thread.sleep(delay);
-                            moveButton(new Point(point.x - 50, point.y ));
-                            Thread.sleep(delay);
-                            moveButton(point);
-                            Thread.sleep(delay);
+                    try {
+                        for (int i = 1; i <= 580; i++) {
 
-                            point.x = point.x -50;
+                            setLocation(point.x-i,point.y+i);
+                            Thread.sleep(delay);
+                            // tmp1.x = point.x ;
+                            // tmp2.y = point.y ;
 
-                            if(killed == false)
+                            if (killed) {
                                 break;
-
-                            if(point.x <0)
-                            {
-                                panel.remove(tmp);
-
-                                Enemies.getPlayerHp(1);
-
-                                Enemies.updateHp();
-                                //playerHp--;
-
-                                System.out.println(Enemies.getPlayerHp(0));
-                                if(Enemies.getPlayerHp(0)<=0)
-                                {
-                                    Multiple.gameOver(panel);
-
-                                    panel.add(new JLabel("Game over")).setBounds(600-200, 300-50,200,50);
-                                }
-                                break;
-                                //subtract points from player
                             }
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
+
+                            if(i == 580)
+                                System.out.println("last point" +point);
                         }
 
-                        */
+                        for (int i = 1; i <= 580; i++) {
+
+
+
+                            moveButton(new Point((point.x-680) - i, (point.y+580) - i));
+                            Thread.sleep(delay);
+
+                            if (killed) {
+                                break;
+                            }
+
+                            if ((point.x-680)-i < 0) {
+                                System.out.println("is removed");
+                                panel.remove(tmp);
+                                Enemies.getPlayerHp(10);
+
+                                Enemies.updateHp();
+
+                                System.out.println("done by saw"+Enemies.getPlayerHp(0));
+
+                                if (Enemies.getPlayerHp(0) <= 0) {
+                                    Multiple.gameOver(panel);
+                                    panel.add(new JButton("Game over")).setBounds(600 - 200, 300 - 50, 200, 50);
+
+                                }
+                                break;
+                            }
+                        }
+                        System.out.println("AFTERpoint value"+ point);
+
+                    }catch (InterruptedException ex) {
+                        ex.printStackTrace();
                     }
+
                 }
             };
             dd = new Thread(r);

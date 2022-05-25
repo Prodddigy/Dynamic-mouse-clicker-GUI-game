@@ -4,12 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.ImageObserver;
 import java.awt.image.ImageProducer;
+import java.util.Objects;
 
 public class MainMenu extends JFrame {
 
 
 Player newPlayer ;
-
+    String nick="anonymous";
 
     MainMenu()
     {
@@ -34,17 +35,36 @@ Player newPlayer ;
             }
         };
 
+        start.setForeground(Color.MAGENTA);
+        start.setFont(new Font(Font.DIALOG, Font.ITALIC,30));
+
         //JLabel background = new JLabel(icon);
 
+        JLabel insertNick = new JLabel("Please insert your nickname");
+        insertNick.setFont(new Font(Font.DIALOG, Font.ITALIC,30));
+
+        insertNick.setForeground(Color.MAGENTA);
+
+        JTextField nickname = new JTextField();
 
 
+        nickname.setFont(new Font(Font.DIALOG, Font.ITALIC,30));
+        nickname.setForeground(Color.MAGENTA);
+
+
+        this.nick = nickname.getText();
+
+        nickname.setOpaque(false);
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                if(Objects.equals(nickname.getText(), "your nickname") || Objects.equals(nickname.getText(), "yournickname"))
+                {
+                    nickname.setText("very funny");
+                }
 
-
-            newPlayer = new Player("Tim");
+            newPlayer = new Player(nickname.getText());
 
             for( Player tmp : Player.TopPlayers)
             {
@@ -63,10 +83,24 @@ Player newPlayer ;
             }
         });
 
+
+        JButton scoreboard = new JButton("ScoreBoard");
+        scoreboard.setForeground(Color.MAGENTA);
+        scoreboard.setFont(new Font(Font.DIALOG, Font.ITALIC,30));
+
+
+
         frame.setSize(1200, 600);
 
        start.setBounds(frame.getWidth()/2-100,frame.getHeight()/2-20, 200,40);
+        nickname.setBounds(frame.getWidth()/2-400,frame.getHeight()/2-20, 200,40);
+        insertNick.setBounds(frame.getWidth()/2-490,frame.getHeight()/2-70, 400,40);
+        scoreboard.setBounds(frame.getWidth()/2-100,frame.getHeight()/2+80, 200,40);
 
+       // start.setOpaque(false);
+        panel.add(scoreboard);
+        panel.add(insertNick);
+        panel.add(nickname);
         panel.add(start);
 
         frame.add(panel);

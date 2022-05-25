@@ -16,13 +16,21 @@ public class Enemies extends JFrame implements WindowListener {
 
     private static int playerHp =20;
 
+    public static void setPlayerPts(int playerPts) {
+        Enemies.playerPts = playerPts;
+    }
+
     private static int playerPts = 0;
 
     private Thread waitForEnemy;
 
     JPanel panel;
 
-    private boolean metal =false;
+    public static boolean isMetal() {
+        return metal;
+    }
+
+    private static boolean metal =false;
 
     private static Player player;
 
@@ -263,17 +271,19 @@ public class Enemies extends JFrame implements WindowListener {
         sword.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                metal = true;
-                Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+             //   if(playerPts == 5000) {
+                    metal = true;
+                    Toolkit toolkit = Toolkit.getDefaultToolkit();
 
 
+                    Cursor a = toolkit.createCustomCursor(swordImage, new Point(0, 0), "bat");
 
-                Cursor a = toolkit.createCustomCursor(swordImage, new Point(0,0),"bat");
 
+                    frame.setCursor(a);
+                }
 
-                frame.setCursor(a);
-
-            }
+          //  }
         });
 
 /*
@@ -309,7 +319,7 @@ for (int j = 1; j < 3; j++) {
         ImageIcon finalSawImgIc = sawImgIc;
         waitForEnemy = new Thread(() -> {
             try {//45997
-                Thread.sleep(1000);
+                Thread.sleep(45997);
                 for (int i = 1; i <=6 ; i++) {
 
 
@@ -340,7 +350,7 @@ for (int j = 1; j < 3; j++) {
 
                     }
 
-                        sleep(500);
+                        sleep(997);
                 }
 
 

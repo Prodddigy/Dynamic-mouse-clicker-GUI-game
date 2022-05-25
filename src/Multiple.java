@@ -50,7 +50,7 @@ public class Multiple extends JButton{
                 if( enemyHealth == 10)
                 {
                     newplayer.setScore(1000);
-
+                    Enemies.setPlayerPts(1000);
                     Enemies.updatePts();
                      //killed =false;
                     panel.remove(tmp);
