@@ -1,7 +1,11 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class Multiple extends JButton{
     private int enemyHealth;
@@ -49,6 +53,8 @@ public class Multiple extends JButton{
 
                 if( enemyHealth == 10)
                 {
+                        screamPlease();
+                        
                     newplayer.setScore(1000);
                     Enemies.setPlayerPts(1000);
                     Enemies.updatePts();
@@ -69,6 +75,23 @@ public class Multiple extends JButton{
             }
         });
     }
+
+    public void screamPlease()
+    {
+
+
+
+            try {
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("slash.wav").getAbsoluteFile());
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.start();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+    }
+
 
     public void danceBaby(Point point, int position, JPanel panel, Multiple tmp, JFrame frame) {
         final int delay = 997;

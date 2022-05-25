@@ -1,7 +1,11 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class MultipleSaws extends JButton {
 
@@ -31,7 +35,7 @@ MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int positio
 
         if(Enemies.isMetal()) {
 
-
+            screamPlease();
             newplayer.setScore(10000);
 
             Enemies.updatePts();
@@ -50,8 +54,23 @@ MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int positio
 
 }
 
+    public void screamPlease()
+    {
+        try
+        {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("will.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace( );
+        }
+    }
+
     public void danceBaby_but_diagonally(int position,Point point, JPanel panel, MultipleSaws tmp, JFrame frame) {
-        final int delay = 10;
+        final int delay = 7;
         // System.out.println("danceBaby loc"+ getLocation());
         if( position ==2) {
             Runnable r = new Runnable() {
