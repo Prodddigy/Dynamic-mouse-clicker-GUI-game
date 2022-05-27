@@ -88,6 +88,13 @@ Player newPlayer ;
         scoreboard.setForeground(Color.MAGENTA);
         scoreboard.setFont(new Font(Font.DIALOG, Font.ITALIC,30));
 
+        scoreboard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> new Scoreboard(Player.TopPlayers));
+            }
+        });
+
 
 
         frame.setSize(1200, 600);

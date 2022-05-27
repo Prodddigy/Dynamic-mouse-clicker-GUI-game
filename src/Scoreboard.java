@@ -1,22 +1,48 @@
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Scoreboard extends AbstractTableModel {
+public class Scoreboard extends AbstractListModel {
 
-  
-    @Override
-    public int getRowCount() {
-        return 0;
+
+    private ArrayList<Player> topplayers;
+
+    public Scoreboard(ArrayList<Player> topplayers){
+
+        this.topplayers = topplayers;
+
+        JFrame jFrame = new JFrame();
+        JList<String> jList = new JList<>();
+        jList.setModel(new AbstractListModel<String>() {
+            @Override
+            public int getSize() {
+                return topplayers.size();
+            }
+
+            @Override
+            public String getElementAt(int index) {
+                return topplayers.get(index).toString();
+            }
+        });
+
+
+        jFrame.add(new JScrollPane(jList));
+        jFrame.setSize(300, 300);
+        jFrame.setLocationRelativeTo(null);
+        jFrame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        jFrame.setVisible(true);
+
     }
 
     @Override
-    public int getColumnCount() {
-        return 0;
+    public int getSize() {
+        return topplayers.size();
     }
 
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        return null;
+    public String getElementAt(int index) {
+        return topplayers.get(index).toString();
     }
 }
