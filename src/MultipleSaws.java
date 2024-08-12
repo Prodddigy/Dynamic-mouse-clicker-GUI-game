@@ -20,14 +20,26 @@ public class MultipleSaws extends JButton {
 
     Thread dd;
 
+    JButton jb;
 
 
-MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int position, Player newplayer )
+
+MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame, Point point, int position, Player newplayer, Thread music)
 {
     super(icon);
     MultipleSaws tmp = this;
 
     danceBaby_but_diagonally(position,point,panel,tmp,frame);
+
+    jb = new JButton("Game over");
+
+    jb.addActionListener(e -> {
+        Rythm.clip.stop();
+        Main.stopMusic=false;
+        music.interrupt();
+        frame.dispose();
+
+    });
 
     addActionListener(new ActionListener() {
         @Override
@@ -121,7 +133,7 @@ MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int positio
 
                                     if (Enemies.getPlayerHp(0) <= 0) {
                                         Multiple.gameOver(panel);
-                                        panel.add(new JButton("Game over")).setBounds(600 - 200, 300 - 50, 200, 50);
+                                        panel.add(jb).setBounds(600 - 200, 300 - 50, 200, 50);
 
                                     }
                                     break;
@@ -181,13 +193,13 @@ MultipleSaws(ImageIcon icon, JPanel panel, JFrame frame,Point point, int positio
 
                                 if (Enemies.getPlayerHp(0) <= 0) {
                                     Multiple.gameOver(panel);
-                                    panel.add(new JButton("Game over")).setBounds(600 - 200, 300 - 50, 200, 50);
+                                    panel.add(jb).setBounds(600 - 200, 300 - 50, 200, 50);
 
                                 }
                                 break;
                             }
                         }
-                        System.out.println("AFTERpoint value"+ point);
+                        //System.out.println("AFTERpoint value"+ point);
 
                     }catch (InterruptedException ex) {
                         ex.printStackTrace();

@@ -1,11 +1,7 @@
-import javax.sound.sampled.Clip;
 import javax.swing.*;
-import javax.swing.plaf.multi.MultiInternalFrameUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Scanner;
 
 import static java.lang.Thread.sleep;
 
@@ -141,18 +137,18 @@ public class Enemies extends JFrame implements WindowListener {
             Point point = new Point (frame.getWidth() - (200 * i) - 75, frame.getHeight() - (400 / j) - 75);
             if(i%2 ==0) {
 
-                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 2, player);
+                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 2, player,music);
                 enemies.add(enem);
                 enem.setBounds(frame.getWidth() - (200 * i) - 35, frame.getHeight() - (400 / j) - 35, 70, 70);
-                System.out.println(enem.getLocation()+" enemies location hello");
+              //  System.out.println(enem.getLocation()+" enemies location hello");
                 panel.add(enem);
             }
             else
             {
-                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 1,player);
+                Multiple enem = new Multiple("SHOOT HP-> " + 10, roo, panel, frame, point, 1,player, music);
                 enemies.add(enem);
                 enem.setBounds(frame.getWidth() - (200 * i) - 35, frame.getHeight() - (400 / j) - 35, 70, 70);
-                System.out.println(enem.getLocation()+" enemies location hello");
+            //    System.out.println(enem.getLocation()+" enemies location hello");
                 panel.add(enem);
 
             }
@@ -328,7 +324,7 @@ for (int j = 1; j < 3; j++) {
                     {
                         Point point = new Point (1200-20, 0);
                         int position =1;
-                        MultipleSaws enemSaw = new MultipleSaws(finalSawImgIc,panel,frame,point,position,player);
+                        MultipleSaws enemSaw = new MultipleSaws(finalSawImgIc,panel,frame,point,position,player,music);
                         enemiesSaw.add(enemSaw);
                         enemSaw.setBounds(0-20,1200-20,40,40);
                         panel.add(enemSaw);
@@ -341,7 +337,7 @@ for (int j = 1; j < 3; j++) {
                     {
                         Point point = new Point (1180, 580);
                         int position =2;
-                        MultipleSaws enemSaw = new MultipleSaws(finalSawImgIc,panel,frame,point,position,player);
+                        MultipleSaws enemSaw = new MultipleSaws(finalSawImgIc,panel,frame,point,position,player, music);
                         enemiesSaw.add(enemSaw);
                         enemSaw.setBounds(600-20,1200-20,40,40);
                         panel.add(enemSaw);
@@ -354,7 +350,7 @@ for (int j = 1; j < 3; j++) {
                 }
 
 
-                System.out.println("next enemy pls");
+              //  System.out.println("next enemy pls");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -431,13 +427,13 @@ for (int j = 1; j < 3; j++) {
 
     public static void updateHp()
     {
-        System.out.println("Update hp"+ playerHp);
+     //   System.out.println("Update hp"+ playerHp);
         health.setText("HP" + playerHp+"/20");
     }
 
     public static void updatePts()
     {
-        System.out.println("Update score"+ player.getScore());
+     //   System.out.println("Update score"+ player.getScore());
         scoreLabel.setText( player.getScore()+"pts");
     }
 

@@ -23,7 +23,9 @@ public class Multiple extends JButton{
 
     private Multiple enem;
 
-    Multiple(String text, ImageIcon icon,JPanel panel, JFrame frame, Point point, int position, Player newplayer)
+    private JButton jb;
+
+    Multiple(String text, ImageIcon icon, JPanel panel, JFrame frame, Point point, int position, Player newplayer, Thread music)
     {
         super(text,icon);
 
@@ -33,9 +35,20 @@ public class Multiple extends JButton{
 
         enem = this;
 
+        jb = new JButton("Game over");
+
+        jb.addActionListener(e -> {
+            Rythm.clip.stop();
+
+            Main.stopMusic=false;
+            music.interrupt();
+            frame.dispose();
+
+        });
+
         Multiple tmp = this;
         System.out.println(point+ " location now");
-        danceBaby(point,position,panel, tmp,frame);
+        enemyMovement(point,position,panel, tmp,frame);
         System.out.println(point + "location after");
 
         addActionListener(new ActionListener() {
@@ -53,7 +66,7 @@ public class Multiple extends JButton{
 
                 if( enemyHealth == 10)
                 {
-                        screamPlease();
+                        hitSound();
                         
                     newplayer.setScore(1000);
                     Enemies.setPlayerPts(1000);
@@ -76,7 +89,7 @@ public class Multiple extends JButton{
         });
     }
 
-    public void screamPlease()
+    public void hitSound()
     {
 
 
@@ -93,7 +106,7 @@ public class Multiple extends JButton{
     }
 
 
-    public void danceBaby(Point point, int position, JPanel panel, Multiple tmp, JFrame frame) {
+    public void enemyMovement(Point point, int position, JPanel panel, Multiple tmp, JFrame frame) {
         final int delay = 997;
        // System.out.println("danceBaby loc"+ getLocation());
     if( position ==2) {
@@ -131,7 +144,7 @@ public class Multiple extends JButton{
 
                         if(Enemies.getPlayerHp(0)<=0) {
                             gameOver(panel);
-                            panel.add(new JButton("Game over")).setBounds(600-200, 300-50,200,50);
+                            panel.add(jb).setBounds(600-200, 300-50,200,50);
 
                         }
                         break;
@@ -184,7 +197,7 @@ public class Multiple extends JButton{
                         {
                             gameOver(panel);
 
-                            panel.add(new JLabel("Game over")).setBounds(600-200, 300-50,200,50);
+                            panel.add(jb).setBounds(600-200, 300-50,200,50);
                         }
                         break;
                         //subtract points from player

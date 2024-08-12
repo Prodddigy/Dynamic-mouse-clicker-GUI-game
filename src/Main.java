@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static java.lang.Thread.sleep;
+
 public class Main {
 
     static boolean stopMusic =true;
@@ -29,18 +31,13 @@ public class Main {
 
             Rythm song = new Rythm(path);
 
-            song.clip.start();
+            Rythm.clip.start();
 
-            while(stopMusic)
-            {
-                String sing = path;
 
-                System.out.println("Now playing...");
 
-                System.out.println("-_-_-_-_ "+sing+ " -_-_-_-_");
 
-                break;
-            }
+
+
 
         }
         catch (Exception ex)
